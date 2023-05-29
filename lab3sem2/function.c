@@ -77,12 +77,22 @@ FILE* openAndReadBMPFile(const char* filename, BMPHeader* header, BMPInfoHeader*
     return file;
 }
 
+double power(double base, double exponent) {
+    double result = 1.0;
+
+    while (exponent > 0) {
+        result *= base;
+        exponent--;
+    }
+
+    return result;
+}
 
 
 void gammaCorrection(BMPColor *color, float gammaValue) {
-    color->red   = (unsigned char)(pow(color->red   / 255.0f, gammaValue) * 255.0f);
-    color->green = (unsigned char)(pow(color->green / 255.0f, gammaValue) * 255.0f);
-    color->blue  = (unsigned char)(pow(color->blue  / 255.0f, gammaValue) * 255.0f);
+    color->red   = (unsigned char)(power(color->red   / 255.0f, gammaValue) * 255.0f);
+    color->green = (unsigned char)(power(color->green / 255.0f, gammaValue) * 255.0f);
+    color->blue  = (unsigned char)(power(color->blue  / 255.0f, gammaValue) * 255.0f);
 }
 
 void convertToNegative(BMPInfoHeader infoHeader, BMPColor* pixels) {
